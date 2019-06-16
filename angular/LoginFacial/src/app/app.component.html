@@ -1,0 +1,35 @@
+<div style="text-align:center">
+  <h1>
+    Login com reconhecimento facial
+  </h1>
+
+  <div>
+    <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+            [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+            [videoOptions]="videoOptions"
+            [imageQuality]="1"
+            (cameraSwitched)="cameraWasSwitched($event)"
+            (initError)="handleInitError($event)"
+    ></webcam>
+    <br/>
+    <button class="actionBtn" (click)="triggerSnapshot();">Tirar foto</button>
+    <button class="actionBtn" (click)="toggleWebcam();">Mostrar foto</button>
+    <br/>
+    <br/>
+    <!--
+    DeviceId: <input id="deviceId" type="text" [(ngModel)]="deviceId" style="width: 500px">
+    <button (click)="showNextWebcam(deviceId);">Ativar</button>
+    -->
+  </div>
+</div>
+
+<div class="snapshot" *ngIf="webcamImage">
+  <h2>Foto Tirada:</h2>
+  <img [src]="webcamImage.imageAsDataUrl"/>
+</div>
+
+<h4 *ngIf="errors.length > 0">Messages:</h4>
+<ul *ngFor="let error of errors">
+  <li>{{error | json}}</li>
+</ul>
+
